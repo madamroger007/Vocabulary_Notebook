@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="My Word List">
+  <meta property="og:description" content="My Word List">
+  <meta property="og:image" content="{{ url_for('static', filename='img/logo_red.png') }}">
+
+  <link rel="shorcut icon" href="{{  url_for('static', filename='img/icon.png') }}" type="image/x-icon" />
+  <link rel="icon" href="{{  url_for('static', filename='img/icon.png') }}" type="image/x-icon" />
+
+  <title>Home page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://kit.fontawesome.com/584805cf69.js" crossorigin="anonymous"></script>
+
+ 
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="banner" onclick="window.location.href ='/'"></div>
+
+    {% if msg %}
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end">
+        <div>
+          <h1 id="word" style="display: inline">{{ keyword }}</h1>
+        </div>
+      </div>
+      <hr />
+      <div>
+        {{ msg }}
+        {% if suggestions %}
+        {% for sugest in suggestions.split(',') %}
+        <em style="background-color: lemonchiffon; text-decoration: underline;">{{ sugest }}</em>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    
+    {% endif %}
+
+  </div>
+
+  <div class="container">
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="/detail/test" class="nav-link px-2 text-body-secondary">Detail page</a></li>
+
+      </ul>
+      <p class="text-center text-body-secondary">© 2023 Ad'am, Inc</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
