@@ -1,18 +1,26 @@
 from flask import Flask, render_template, redirect, url_for, jsonify,request
 import requests
+import os
+from os.path import join,dirname
+from dotenv import load_dotenv
 from pymongo import MongoClient
 from datetime import datetime
 from bson import ObjectId
-# api_key = 'bd162044-b13e-4f3d-9606-fdfa81953b98'
-# url = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={api_key}"
-# word = "potato"
+
+# Environment key
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+API_KEY= os.environ.get("API_WORD_KEY")
+MONGODB_URI = os.environ.get("MONGODB_URI")
+DB_NAME =  os.environ.get("DB_NAME")
+
+
+client = MongoClient(MONGODB_URI)
+
+db = client[DB_NAME]
 
 app = Flask(__name__)
-cxn_str = "mongodb+srv://adam:adamsjr123@coba.posdf04.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(cxn_str)
-
-db = client.dbsparta_plus_week2
-
 # Page Layout
 @app.route("/")
 def Main():
@@ -34,8 +42,7 @@ def Main():
 
 @app.route("/detail/<keyword>")
 def Detail(keyword):
-    api_key = "bd162044-b13e-4f3d-9606-fdfa81953b98"
-    url = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{keyword}?key={api_key}"
+    url = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{keyword}?key={API_KEY}"
     response = requests.get(url)
     definitions = response.json()
     if not definitions:
